@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Get JSON Response from API</title>
+    <script>
+        function collectJSON() {
+            var xmlhttp = new XMLHttpRequest();
+            var url = "http://api.openweathermap.org/data/2.5/weather?lat=";
+            var latitude = 35;
+            var longitude = 139;
+
+            var key = "9ecc933945d7642b3d77eac0317b7330";
+            url += latitude + "&lon=" + longitude + "&appid=" + key;
+            xmlhttp.open("GET", url, false);
+            xmlhttp.send();
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                var result = xmlhttp.responseText;
+                document.getElementById("show").innerHTML = result;
+            }
+            // for POST
+            var height = parseInt(document.getElementById("height").value);
+            var weight = parseInt(document.getElementById("weight").value);
+            var jsStringiData = { ht: height, wt: weight };
+            var jsonData = JSON.stringify(jsStringiData);
+            xmlhttp.open("POST", "Your-API", "asynchronyous boolean for get false and post shoubld true");
+            xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencode");
+            // xmlhttp.send("ht" + height + "&wt=" + weight); //height & weight is your html input names
+            xmlhttp.send("data=" + jsonData);
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    var result = xmlhttp.responseText;
+                    var jsData = JSON.parse(result);
+                    document.getElementById("output").innerHTML = "Your result is " + jsData;
+                }
+            }
+        }
+
+    </script>
+</head>
+
+<body>
+    <button id="btnClick" onclick="collectJSON();">Collect</button>
+    <div id="show"></div>
+</body>
+
+</html>

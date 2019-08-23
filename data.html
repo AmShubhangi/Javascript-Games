@@ -1,0 +1,16 @@
+<html>
+
+<body>
+    <script>
+        window.onload = function () {
+            var jsonString = '{"fname":"john","lname":"ambade","dob":406771200000}';
+            var jsObject = JSON.parse(jsonString);
+            jsObject.dob = new Date(jsObject.dob);
+            // alert(jsObject.dob);
+            var birthday = jsObject.dob.toJSON().slice(0, 10).split("-").reverse().join("/");   
+            alert(birthday);
+        }
+    </script>
+</body>
+
+</html>

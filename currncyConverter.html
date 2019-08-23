@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <title>Currency Converter</title>
+    <style>
+        #box {
+            width: 300px;
+            height: 150px;
+            margin: 0px auto;
+            border: 2px solid black;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        table {
+            margin: 0px auto;
+        }
+    </style>
+    <script>
+        function convertCurrency() {
+            var from = document.getElementById("from").value;
+            var to = document.getElementById("to").value;
+            var xmlhttp = new XMLHttpRequest();
+            var url = "https://api.exchangeratesapi.io/latest?symbols=" + from + "," + to;
+            xmlhttp.open("GET", url, true);
+            xmlhttp.send();
+            xmlhttp.onreadystatechange = function () {
+                if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                    var result = xmlhttp.responseText;
+                    var jsResult = JSON.parse(result);
+                    var oneUnit = jsResult.rates[to] / jsResult.rates[from];
+                    console.log(jsResult.rates[to]);
+                    var amt = document.getElementById("fromAmount").value;
+                    console.log(amt);
+                    document.getElementById("toAmount").value = (oneUnit * amt).toFixed(2);
+                }
+            }
+        }
+    </script>
+</head>
+
+<body onload="convertCurrency();">
+    <div id="box">
+        <h2>Currency Converter</h2>
+        <table>
+            <tr>
+                <td><input id="fromAmount" type="text" size="15" value="1" onkeyup="convertCurrency();" /></td>
+                <td>
+                    <select id="from" onchange="convertCurrency();">
+                        <option value="AUD">Australian Dollar (AUD)</option>
+                        <option value="BGN">Bulgarian Lev (BGN)</option>
+                        <option value="CAD">Canadian Dollar (CAD)</option>
+                        <option value="CHF">Swiss Franc (CHF)</option>
+                        <option value="DKK">Danish Krone (DKK)</option>
+                        <option value="GBP">Pound Sterling (GBP)</option>
+                        <option value="ILS">Israeli New Shekel (ILS)</option>
+                        <option value="INR">Indian Rupee (INR)</option>
+                        <option value="JPY">Japanese Yen (JPY)</option>
+                        <option value="PHP">Philippine Peso (PHP)</option>
+                        <option value="RUB">Russian Ruble (RUB)</option>
+                        <option value="USD" selected>US Dollar (USD)</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <td><input id="toAmount" type="text" size="15" disabled /></td>
+                <td>
+                    <select id="to" onchange="convertCurrency();">
+                        <option value="AUD">Australian Dollar (AUD)</option>
+                        <option value="BGN">Bulgarian Lev (BGN)</option>
+                        <option value="CAD">Canadian Dollar (CAD)</option>
+                        <option value="CHF">Swiss Franc (CHF)</option>
+                        <option value="DKK">Danish Krone (DKK)</option>
+                        <option value="GBP">Pound Sterling (GBP)</option>
+                        <option value="ILS">Israeli New Shekel (ILS)</option>
+                        <option value="INR" selected>Indian Rupee (INR)</option>
+                        <option value="JPY">Japanese Yen (JPY)</option>
+                        <option value="PHP">Philippine Peso (PHP)</option>
+                        <option value="RUB">Russian Ruble (RUB)</option>
+                        <option value="USD">US Dollar (USD)</option>
+                    </select>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+
+</html>

@@ -1,0 +1,41 @@
+.hideButton {
+  display: none;
+}
+
+.score {
+  display: inline-block;
+}
+
+.card {
+  position: absolute;
+  left: 0;
+  top: 80px;
+  display: inline-block;
+  margin: 5px 0;
+  padding: 7px;
+  height: 90px;
+  width: 70px;
+  background: white;
+  border: 1px solid black;
+  box-shadow: 5px 10px #333;
+  border-radius: 5px;
+}
+
+.big {
+  font-size: 3rem;
+  text-align: center;
+  line-height: 40px;
+  margin: auto;
+  display: block;
+}
+
+.red {
+  color: red;
+}
+
+.tiny {
+  display: block;
+  font-size: 0.8em;
+  line-height: 8px;
+  vertical-align: top;
+}

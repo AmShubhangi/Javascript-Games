@@ -1,0 +1,126 @@
+<html>
+
+<head>
+    <title>JavaScript</title>
+    <style>
+        .copyMe {
+            display: inline-block;
+            padding: 15px;
+            border: 1px solid black;
+            position: absolute;
+            width: 60px;
+            text-align: center;
+            height: 40px;
+            cursor: pointer;
+        }
+
+        .newb {
+            color: red;
+        }
+
+        #garbage {
+            position: absolute;
+            height: 100px;
+            width: 100px;
+            background-color: black;
+            left: 500px;
+            top: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="garbage"></div>
+    <div class="copyMe">Hi</div>
+    <div class="copyMe">Hello </div>
+    <div class="copyMe">JavaScript
+        <br> Course</div>
+    <div class="copyMe">Wow</div>
+    <div class="copyMe">Angular</div>
+    <script>
+        const garbage = document.getElementById("garbage");
+        const rep = document.querySelectorAll(".copyMe");
+        let holder = {};
+        rep.forEach(function (ele, ind) {
+            ele.addEventListener("click", function (e) {
+                console.log(ind);
+                holder.obj = ele.cloneNode(true);
+                holder.obj.style.cursor = "move";
+                holder.obj.classList.add("newb");
+                holder.obj.style.backgroundColor = ranColor();
+                holder.obj.style.left = ele.offsetLeft + "px";
+                holder.obj.style.top = ele.offsetTop + 200 + "px";
+                holder.obj.startX = ele.offsetLeft;
+                holder.obj.startY = ele.offsetTop;
+                holder.obj.moves = Math.floor(Math.random() * 25);
+                holder.obj.int = setInterval(mover, 25);
+
+                function mover() {
+                    if (holder.obj.moves <= 0) {
+                        clearInterval(holder.obj.int);
+                    }
+                    else {
+                        holder.obj.moves--;
+                        holder.obj.startY += 10;
+                        holder.obj.startX += 1;
+                        holder.obj.style.top = holder.obj.startY + "px";
+                        holder.obj.style.left = holder.obj.startX + "px";
+                    }
+                }
+                document.body.appendChild(holder.obj);
+                console.log(holder.obj);
+                drager(holder.obj);
+            })
+            ele.style.left = ind * 100 + "px";
+        })
+
+        function ranColor() {
+            function c() {
+                let hex = Math.floor(Math.random() * 256).toString(16);
+                hex = ("0" + String(hex)).substr(-2);
+                return hex;
+            }
+            return "#" + c() + c() + c();
+        }
+
+        function drager(el) {
+            let pos = {};
+            el.onmousedown = dragMouse;
+
+            function dragMouse(e) {
+                pos.nx = e.clientX;
+                pos.ny = e.clientY;
+                document.onmouseup = function () {
+                    document.onmouseup = null;
+                    document.onmousemove = null;
+                }
+                document.onmousemove = function (e) {
+                    pos.ox = pos.nx - e.clientX; //amount to move horizontal
+                    pos.oy = pos.ny - e.clientY; //amount to move vertical
+                    pos.nx = e.clientX;
+                    pos.ny = e.clientY;
+                    if (isCollide(el)) {
+                        console.log("OVER");
+                        el.onmousedown = null;
+                        el.parentElement.removeChild(el);
+                    }
+                    // else {
+                    //     console.log("Ok");
+                    // }
+                    el.style.top = (el.offsetTop - pos.oy) + "px";
+                    el.style.left = (el.offsetLeft - pos.ox) + "px";
+                }
+            }
+        }
+
+        function isCollide(a) {
+            let aRect = a.getBoundingClientRect();
+            let bRect = garbage.getBoundingClientRect();
+            console.log(aRect);
+            return !(
+                (aRect.bottom < bRect.top) || (aRect.top > bRect.bottom) || (aRect.right < bRect.left) || (aRect.left > bRect.right))
+        }
+    </script>
+</body>
+
+</html>

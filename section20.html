@@ -1,0 +1,79 @@
+<html>
+
+<head>
+    <script src="section20.js"></script>
+    <style>
+        .hide {
+            display: none;
+        }
+
+        .container {
+            width: 80%;
+            height: 80%;
+            margin-left: 10%;
+            background-color: black;
+            overflow: hidden;
+        }
+
+        .startButton {
+            text-align: center;
+            font-size: 2em;
+            color: white;
+            background-color: red;
+        }
+
+        .myShip {
+            position: absolute;
+            left: 40%;
+            bottom: 20%;
+            background-color: white;
+            width: 100px;
+            height: 20px;
+        }
+
+        .fireme {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <h3>Hello, Javascript!</h3>
+    <div class="topBar">Score : <span class="score">0</span></div>
+    <div class="container">
+        <div class="startButton">Start Game</div>
+        <div class="myShip"></div>
+        <div class="fireme hide"></div>
+    </div>
+
+
+    <script>
+        const btn_start = document.querySelector(".startButton");
+        const myShip = document.querySelector(".myShip");
+        const container = document.querySelector(".container");
+        const fireme = document.querySelector(".fireme");
+        const scoreOutput = document.querySelector(".score");
+        const containerDim = container.getBoundingClientRect();
+        btn_start.addEventListener("click", startGame);
+        let player = {
+            score: 0,
+            speed: 5,
+            gameOver: true,
+            fire: false,
+            alienSpeed: 5
+        };  
+        function startGame() {
+            console.log("start Game");
+
+        }
+    </script>
+
+</body>
+
+</html>
